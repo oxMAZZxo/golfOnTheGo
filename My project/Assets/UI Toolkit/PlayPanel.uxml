@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Styles/unity-button.uss?fileID=7433441132597879392&amp;guid=5a58e706cee54b20db81ec61d8ae7f7b&amp;type=3#unity-button" />
+    <ui:GroupBox name="GroupBox" style="flex-basis: auto; flex-direction: row;">
+        <ui:ListView enabled="true" allow-add="true" reorder-mode="Simple" show-add-remove-footer="false" name="PlayerListView" selection-type="None" show-border="false" virtualization-method="DynamicHeight" horizontal-scrolling="false" style="top: auto; left: auto; bottom: auto; height: 100%; width: 70%; position: relative;" />
+        <ui:GroupBox style="flex-basis: 29%; bottom: auto; position: relative; right: auto; top: auto; transform-origin: right bottom;">
+            <ui:Button text="Add Player" name="AddPlayerButton" style="font-size: 30px;" />
+            <ui:Button text="Back" name="BackButton" style="font-size: 30px;" />
+        </ui:GroupBox>
+    </ui:GroupBox>
+</ui:UXML>

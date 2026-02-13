@@ -1,0 +1,16 @@
+.unity-button {
+    transition-duration: 0.2s;
+    font-size: 50px;
+    -unity-font-style: normal;
+    -unity-text-align: middle-center;
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&guid=9fc971f06cca6a033aa81f0279b6fed1&type=3#NotInter-Regular");
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+.unity-button:hover {
+    translate: 0 0;
+    scale: 1.1 1.1;
+}

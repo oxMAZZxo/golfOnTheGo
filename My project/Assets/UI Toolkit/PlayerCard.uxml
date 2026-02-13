@@ -1,0 +1,5 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="playerCard" style="flex-shrink: 0; height: auto; padding: 5px;">
+        <ui:Label text="Player 0" name="PlayerNameLabel" enable-rich-text="true" style="-unity-text-align: middle-center; -unity-font-style: bold; -unity-text-outline-color: rgb(255, 255, 255); -unity-text-outline-width: 1px; white-space: nowrap; text-overflow: clip; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=9fc971f06cca6a033aa81f0279b6fed1&amp;type=3#NotInter-Regular&quot;); font-size: 60px; width: auto; height: auto; position: relative; top: auto; bottom: auto; left: auto; right: auto; flex-wrap: nowrap;" />
+    </ui:VisualElement>
+</ui:UXML>
