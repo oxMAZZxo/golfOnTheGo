@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D),typeof(CircleCollider2D))]
 public class PlayerController : MonoBehaviour
 {
     private Vector2 touchStart;
@@ -29,9 +29,9 @@ public class PlayerController : MonoBehaviour
         float dragDistance = Mathf.Clamp(dragVector.magnitude, 0f, maxDragDistance);
         Vector2 normalizedDrag = dragVector.normalized;
 
-        Vector3 force = new Vector3(normalizedDrag.x, 0 , normalizedDrag.y) * dragDistance * forceMultiplier;
+        Vector2 force = new Vector2(-normalizedDrag.x, -normalizedDrag.y) * dragDistance * forceMultiplier;
 
-        rb.AddForce(force, ForceMode2D.Impulse);
+        rb.AddForce(force, ForceMode2D.Force);
     }
 
     private void OnTouchStarted(object sender, Vector2 e)
