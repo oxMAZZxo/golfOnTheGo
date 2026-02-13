@@ -1,2 +1,2 @@
-# golfOnTheGo
-Golf On the Go is a mobile mini golf game.
+# Golf on the Go
+Golf on the Go is a mobile mini golf game.
