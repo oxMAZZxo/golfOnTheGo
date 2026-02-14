@@ -3,6 +3,23 @@ using UnityEngine.UIElements;
 
 public class MainMenuManager : MonoBehaviour
 {
-    [SerializeField]private UIDocument mainMenuUiDocument;
-    [SerializeField]private UIDocument playMenuUiDocument;    
+    [SerializeField] private MainMenu mainMenu;
+    [SerializeField] private PlayMenu playMenu;
+
+    void Start()
+    {
+        ShowMainMenu();
+    }
+
+    public void ShowPlayMenu()
+    {
+        mainMenu.gameObject.SetActive(false);
+        playMenu.gameObject.SetActive(true);
+    }
+
+    public void ShowMainMenu()
+    {
+        playMenu.gameObject.SetActive(false);
+        mainMenu.gameObject.SetActive(true);
+    }
 }

@@ -1,48 +1,77 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class PlayerListManager : MonoBehaviour
+public class PlayMenu : MonoBehaviour
 {
-    // Reference to your PlayerCard template
-    public VisualTreeAsset playerCardTemplate;
+    public static PlayMenu Instance { get; private set; }
 
-    private ListView listView;
-    private Button addButton;
+    [SerializeField] private GameObject addPlayerPanel;
+    [SerializeField] private GameObject playerCardPrefab;
+    [SerializeField] private GameObject listViewContainer;
+    private List<PlayerCard> joinedPlayers;
+    public PlayerCard[] JoinedPlayers
+    {
+        get
+        {
+            return joinedPlayers.ToArray();
+        }
+    }
+    private List<GameObject> joinedPlayersUI;
 
-    // Data source for ListView
-    private List<string> players = new List<string>();
+    void Awake()
+    {
+        if (Instance == null && Instance != this)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
-
-        // Grab ListView and Button from UXML
-        listView = root.Q<ListView>("PlayerListView");
-        addButton = root.Q<Button>("AddPlayerButton");
-
-        // Setup ListView
-        listView.itemsSource = players;
-
-        // makeItem returns a cloned PlayerCard for each row
-        listView.makeItem = () => playerCardTemplate.CloneTree();
-
-        // bindItem sets the label text in the cloned card
-        listView.bindItem = (element, index) =>
+        if (playerCardPrefab == null)
         {
-            Label label = element.Q<Label>("PlayerNameLabel");
-            label.text = players[index];
-        };
-
-        listView.selectionType = SelectionType.None;
-        var scrollView = listView.Q<ScrollView>();
-        scrollView.verticalScrollerVisibility = ScrollerVisibility.AlwaysVisible;
-        // Button adds a new player
-        addButton.clicked += () =>
+            Debug.LogError($"Player Card Prefab has not been assigned, cannot add player card to list");
+        }
+        if (listViewContainer == null)
         {
-            string newPlayerName = $"Player {players.Count}";
-            players.Add(newPlayerName);
-            listView.Rebuild(); // must call this for ListView to update and scroll
-        };
+            Debug.LogError($"List view container has not been assigned, cannot add player card to list");
+        }
+        if (addPlayerPanel == null)
+        {
+            Debug.LogError($"The AddPlayerPanel has not been assigned");
+        }
+        joinedPlayers = new List<PlayerCard>();
+        joinedPlayersUI = new List<GameObject>();
+    }
+
+    public void AddPlayer(string name)
+    {
+        joinedPlayers.Add(new PlayerCard(joinedPlayers.Count, name));
+        GameObject card = Instantiate(playerCardPrefab, listViewContainer.transform);
+        card.GetComponentInChildren<TMP_Text>().text = name;
+        joinedPlayersUI.Add(card);
+    }
+
+    void OnEnable()
+    {
+        addPlayerPanel.SetActive(false);
+    }
+}
+
+
+public struct PlayerCard
+{
+    public int ID { get; }
+    public string Name { get; }
+
+    public PlayerCard(int id, string name)
+    {
+        ID = id;
+        Name = name;
     }
 }
