@@ -6,26 +6,12 @@ using UnityEngine.UI;
 
 public class PlayMenu : MonoBehaviour
 {
-    public static PlayMenu Instance { get; private set; }
-
     [SerializeField] private GameObject addPlayerPanel;
     [SerializeField] private GameObject playerCardPrefab;
     [SerializeField] private GameObject listViewContainer;
-    private List<PlayerCard> joinedPlayers;
+    private List<PlayerData> joinedPlayers;
     private List<GameObject> joinedPlayersUI;
-    public static event EventHandler<PlayerCard[]> RequestGameStart; 
-
-    void Awake()
-    {
-        if (Instance == null && Instance != this)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    public static event EventHandler<PlayerData[]> RequestGameStart; 
 
     void Start()
     {
@@ -41,7 +27,7 @@ public class PlayMenu : MonoBehaviour
         {
             Debug.LogError($"The AddPlayerPanel has not been assigned");
         }
-        joinedPlayers = new List<PlayerCard>();
+        joinedPlayers = new List<PlayerData>();
         joinedPlayersUI = new List<GameObject>();
     }
 
@@ -53,7 +39,7 @@ public class PlayMenu : MonoBehaviour
         b = UnityEngine.Random.Range(0f, 1f);
 
         Color color = new Color(r,g,b);
-        joinedPlayers.Add(new PlayerCard(joinedPlayers.Count, name, color));
+        joinedPlayers.Add(new PlayerData(joinedPlayers.Count, name, color));
         GameObject card = Instantiate(playerCardPrefab, listViewContainer.transform);
         card.GetComponentInChildren<TMP_Text>().text = name;
         card.GetComponentInChildren<Image>().color = color;
@@ -62,6 +48,7 @@ public class PlayMenu : MonoBehaviour
 
     public void RequestStart()
     {
+        if(joinedPlayers.Count < 1) {return;}
         RequestGameStart?.Invoke(this, joinedPlayers.ToArray());
     }
 
@@ -72,16 +59,20 @@ public class PlayMenu : MonoBehaviour
 }
 
 
-public struct PlayerCard
+public struct PlayerData
 {
     public int ID { get; }
     public string Name { get; }
     public Color Color {get;}
+    public int CurrentRunScore {get; set;}
+    public int CurrentRunAttempts {get; set;}
 
-    public PlayerCard(int id, string name, Color color)
+    public PlayerData(int id, string name, Color color, int score = 0, int attempts = 0)
     {
         ID = id;
         Name = name;
         Color = color;
+        CurrentRunScore = score;
+        CurrentRunAttempts = attempts;
     }
 }

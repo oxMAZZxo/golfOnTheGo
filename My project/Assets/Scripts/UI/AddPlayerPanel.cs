@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class AddPlayerPanel : MonoBehaviour
 {
+    [SerializeField]private PlayMenu playMenu;
     [SerializeField]private TMP_InputField inputField;
 
     void Start()
@@ -16,7 +17,7 @@ public class AddPlayerPanel : MonoBehaviour
     public void AddPlayer()
     {
         if(string.IsNullOrEmpty(inputField.text) || string.IsNullOrWhiteSpace(inputField.text)) {return;}
-        PlayMenu.Instance.AddPlayer(inputField.text);
+        playMenu.AddPlayer(inputField.text);
         gameObject.SetActive(false);
     }
 
