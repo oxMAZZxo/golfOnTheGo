@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,14 +12,8 @@ public class PlayMenu : MonoBehaviour
     [SerializeField] private GameObject playerCardPrefab;
     [SerializeField] private GameObject listViewContainer;
     private List<PlayerCard> joinedPlayers;
-    public PlayerCard[] JoinedPlayers
-    {
-        get
-        {
-            return joinedPlayers.ToArray();
-        }
-    }
     private List<GameObject> joinedPlayersUI;
+    public static event EventHandler<PlayerCard[]> RequestGameStart; 
 
     void Awake()
     {
@@ -54,9 +48,9 @@ public class PlayMenu : MonoBehaviour
     public void AddPlayer(string name)
     {
         float r; float g; float b;
-        r = Random.Range(0f,1f); 
-        g = Random.Range(0f, 1f);
-        b = Random.Range(0f, 1f);
+        r = UnityEngine.Random.Range(0f,1f); 
+        g = UnityEngine.Random.Range(0f, 1f);
+        b = UnityEngine.Random.Range(0f, 1f);
 
         Color color = new Color(r,g,b);
         joinedPlayers.Add(new PlayerCard(joinedPlayers.Count, name, color));
@@ -64,6 +58,11 @@ public class PlayMenu : MonoBehaviour
         card.GetComponentInChildren<TMP_Text>().text = name;
         card.GetComponentInChildren<Image>().color = color;
         joinedPlayersUI.Add(card);
+    }
+
+    public void RequestStart()
+    {
+        RequestGameStart?.Invoke(this, joinedPlayers.ToArray());
     }
 
     void OnEnable()
