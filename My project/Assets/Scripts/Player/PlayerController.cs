@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D),typeof(CircleCollider2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
 public class PlayerController : MonoBehaviour
 {
+    public static EventHandler<int> PlayerTried;
+    public PlayerData Data { get; set; }
     private Vector2 touchStart;
     private Vector2 touchEnd;
     private Rigidbody2D rb;
@@ -13,14 +15,13 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        TouchControls.touchStarted += OnTouchStarted;
-        TouchControls.touchEnded += OnTouchEnded;
     }
 
     private void OnTouchEnded(object sender, Vector2 e)
     {
         touchEnd = e;
         ShootBall();
+        PlayerTried?.Invoke(this, Data.ID);
     }
 
     private void ShootBall()
@@ -39,9 +40,20 @@ public class PlayerController : MonoBehaviour
         touchStart = e;
     }
 
-    void OnDestroy()
+    public void EnableInput()
+    {
+        TouchControls.touchStarted += OnTouchStarted;
+        TouchControls.touchEnded += OnTouchEnded;
+    }
+
+    public void DisableInput()
     {
         TouchControls.touchStarted -= OnTouchStarted;
         TouchControls.touchEnded -= OnTouchEnded;
+    }
+
+    void OnDestroy()
+    {
+        DisableInput();
     }
 }
