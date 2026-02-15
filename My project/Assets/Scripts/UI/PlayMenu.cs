@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayMenu : MonoBehaviour
 {
@@ -51,9 +53,16 @@ public class PlayMenu : MonoBehaviour
 
     public void AddPlayer(string name)
     {
-        joinedPlayers.Add(new PlayerCard(joinedPlayers.Count, name));
+        float r; float g; float b;
+        r = Random.Range(0f,1f); 
+        g = Random.Range(0f, 1f);
+        b = Random.Range(0f, 1f);
+
+        Color color = new Color(r,g,b);
+        joinedPlayers.Add(new PlayerCard(joinedPlayers.Count, name, color));
         GameObject card = Instantiate(playerCardPrefab, listViewContainer.transform);
         card.GetComponentInChildren<TMP_Text>().text = name;
+        card.GetComponentInChildren<Image>().color = color;
         joinedPlayersUI.Add(card);
     }
 
@@ -68,10 +77,12 @@ public struct PlayerCard
 {
     public int ID { get; }
     public string Name { get; }
+    public Color Color {get;}
 
-    public PlayerCard(int id, string name)
+    public PlayerCard(int id, string name, Color color)
     {
         ID = id;
         Name = name;
+        Color = color;
     }
 }
