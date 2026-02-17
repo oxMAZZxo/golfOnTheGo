@@ -59,20 +59,3 @@ public class PlayMenu : MonoBehaviour
 }
 
 
-public struct PlayerData
-{
-    public int ID { get; }
-    public string Name { get; }
-    public Color Color {get;}
-    public int CurrentRunScore {get; set;}
-    public int CurrentRunAttempts {get; set;}
-
-    public PlayerData(int id, string name, Color color, int score = 0, int attempts = 0)
-    {
-        ID = id;
-        Name = name;
-        Color = color;
-        CurrentRunScore = score;
-        CurrentRunAttempts = attempts;
-    }
-}

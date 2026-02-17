@@ -4,8 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
 public class PlayerController : MonoBehaviour
 {
-    public static EventHandler<int> PlayerTried;
-    public PlayerData Data { get; set; }
+    public static EventHandler PlayerTried;
     private Vector2 touchStart;
     private Vector2 touchEnd;
     private Rigidbody2D rb;
@@ -21,7 +20,7 @@ public class PlayerController : MonoBehaviour
     {
         touchEnd = e;
         ShootBall();
-        PlayerTried?.Invoke(this, Data.ID);
+        PlayerTried?.Invoke(this, EventArgs.Empty);
     }
 
     private void ShootBall()
