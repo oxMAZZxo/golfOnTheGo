@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class LocalMultiplayerManager : MonoBehaviour
 {
     public static LocalMultiplayerManager Instance {get; private set;} 
-    public static event EventHandler<PlayerController[]> PlayersSpawned;
+    public static event EventHandler<PlayerData[]> PlayersSpawned;
     [SerializeField]private PlayerController playerPrefab;
     private PlayerData[] players;
 
@@ -31,18 +31,16 @@ public class LocalMultiplayerManager : MonoBehaviour
     {
         if (scene.buildIndex == 0) { return; }
 
-        PlayerController[] playerControllers = new PlayerController[players.Length];
 
         for(int i = 0; i < players.Length; i++)
         {
             PlayerController current = Instantiate(playerPrefab,new Vector3(0,0),Quaternion.identity);
-            current.GetComponent<SpriteRenderer>().color = players[i].Color;
-            // Assign player name to controller label.
-            current.Data = players[i];
-            playerControllers[i] = current;
+            current.GetComponent<SpriteRenderer>().color = players[i].Colour;
+            players[i].Controller = current;
+            players[i].Tries = 0;
         }
 
-        PlayersSpawned?.Invoke(this, playerControllers);
+        PlayersSpawned?.Invoke(this, players);
     }
 
     void OnDisable()
