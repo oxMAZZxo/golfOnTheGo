@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class ApplicationController : MonoBehaviour
 {
     public static ApplicationController Instance {get; private set;}
-
+    public int CurrentLevel {get; private set;}
     void Awake()
     {
         if(Instance == null && Instance != this)
@@ -25,5 +25,12 @@ public class ApplicationController : MonoBehaviour
     public void LoadLevel(int sceneIndex)
     {
         SceneManager.LoadScene(sceneIndex);
+        CurrentLevel = sceneIndex;
+    }
+
+    public void LoadNextLevel()
+    {
+        CurrentLevel +=1;
+        SceneManager.LoadScene(CurrentLevel);
     }
 }

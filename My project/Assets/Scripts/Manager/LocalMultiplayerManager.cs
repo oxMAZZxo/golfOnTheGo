@@ -31,10 +31,21 @@ public class LocalMultiplayerManager : MonoBehaviour
     {
         if (scene.buildIndex == 0) { return; }
 
+        GameObject playerstart = GameObject.FindGameObjectWithTag("PlayerStart");
+        if(playerstart == null)
+        {
+            Debug.LogError($"A 'PlayerStart' game object could not be found in {scene.name} scene");
+            return;
+        }
 
+        SpawnPlayers(playerstart.transform.position);
+    }
+
+    private void SpawnPlayers(Vector3 spawnPosition)
+    {
         for(int i = 0; i < players.Length; i++)
         {
-            PlayerController current = Instantiate(playerPrefab,new Vector3(0,0),Quaternion.identity);
+            PlayerController current = Instantiate(playerPrefab,spawnPosition,Quaternion.identity);
             current.GetComponent<SpriteRenderer>().color = players[i].Colour;
             players[i].Controller = current;
             players[i].Tries = 0;

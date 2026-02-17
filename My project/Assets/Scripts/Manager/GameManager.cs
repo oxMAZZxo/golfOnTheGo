@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -39,9 +37,20 @@ public class GameManager : MonoBehaviour
             if (player.Controller)
             {
                 player.Score = pothole.Points - (player.Tries - 1);
-                return;
+                break;
             }
         }
+        CheckLevelComplete();
+    }
+
+    private void CheckLevelComplete()
+    {
+        foreach (PlayerData player in activePlayers)
+        {
+            if (player.Controller.isActiveAndEnabled) { return; }
+        }
+        Debug.Log($"Level has been completed!");
+        ApplicationController.Instance.LoadNextLevel();
     }
 
     private void OnPlayerTried(object sender, EventArgs eventArgs)
