@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     private PlayerData[] activePlayers;
     private int currentPlayerIndex;
+    public event Action<string, Color> UpdatePlayerTurn;
 
     void Awake()
     {
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
         }
 
         activePlayers[currentPlayerIndex].Controller.EnableInput();
+        UpdatePlayerTurn?.Invoke(activePlayers[currentPlayerIndex].Name,activePlayers[currentPlayerIndex].Colour);
     }
 
 
@@ -73,7 +75,9 @@ public class GameManager : MonoBehaviour
         activePlayers = e;
         e[0].Controller.EnableInput();
         currentPlayerIndex = 0;
+        UpdatePlayerTurn?.Invoke(e[0].Name,e[0].Colour);
     }
+
 
     void OnDisable()
     {
