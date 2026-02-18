@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
@@ -10,17 +11,34 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float maxDragDistance = 300f;
     [SerializeField] private float forceMultiplier;
+    private bool hasTried;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
+    void OnEnable()
+    {
+        EnableInput();
+    }
+
+    
+
     private void OnTouchEnded(object sender, Vector2 e)
     {
         touchEnd = e;
         ShootBall();
-        PlayerTried?.Invoke(this, EventArgs.Empty);
+    }
+
+    void FixedUpdate()
+    {
+        if (!hasTried) { return; }
+        if(rb.IsSleeping())
+        {
+            hasTried = false;
+            PlayerTried?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private void ShootBall()
@@ -32,6 +50,7 @@ public class PlayerController : MonoBehaviour
         Vector2 force = new Vector2(-normalizedDrag.x, -normalizedDrag.y) * dragDistance * forceMultiplier;
 
         rb.AddForce(force, ForceMode2D.Force);
+        hasTried = true;
     }
 
     private void OnTouchStarted(object sender, Vector2 e)
