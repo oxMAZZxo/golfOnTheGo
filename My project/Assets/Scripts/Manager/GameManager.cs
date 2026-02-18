@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
         }
 
         activePlayers[currentPlayerIndex].Controller.EnableInput();
+        CameraFollow.Instance.Target = activePlayers[currentPlayerIndex].Controller.transform;
         UpdatePlayerTurn?.Invoke(activePlayers[currentPlayerIndex].Name,activePlayers[currentPlayerIndex].Colour);
     }
 
@@ -76,6 +77,7 @@ public class GameManager : MonoBehaviour
         e[0].Controller.EnableInput();
         currentPlayerIndex = 0;
         UpdatePlayerTurn?.Invoke(e[0].Name,e[0].Colour);
+        CameraFollow.Instance.Target = e[0].Controller.transform;
     }
 
 

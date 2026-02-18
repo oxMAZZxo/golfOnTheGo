@@ -16,14 +16,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-    }
-
-    void OnEnable()
-    {
-        EnableInput();
-    }
-
-    
+    }    
 
     private void OnTouchEnded(object sender, Vector2 e)
     {
