@@ -18,7 +18,7 @@ public class CameraFollow : MonoBehaviour
         }
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (Target == null) { return; }
         Vector3 newposition = Target.position;
