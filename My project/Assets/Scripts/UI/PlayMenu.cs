@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlayMenu : MonoBehaviour
@@ -9,8 +10,9 @@ public class PlayMenu : MonoBehaviour
     [SerializeField] private GameObject addPlayerPanel;
     [SerializeField] private GameObject playerCardPrefab;
     [SerializeField] private GameObject listViewContainer;
+    private ToggleGroup toggleGroup;
     private List<PlayerData> joinedPlayers;
-    private List<GameObject> joinedPlayersUI;
+    private List<Toggle> joinedPlayersUI;
     public static event EventHandler<PlayerData[]> RequestGameStart; 
 
     void Start()
@@ -18,6 +20,10 @@ public class PlayMenu : MonoBehaviour
         if (playerCardPrefab == null)
         {
             Debug.LogError($"Player Card Prefab has not been assigned, cannot add player card to list");
+        }
+        if(playerCardPrefab.GetComponent<Toggle>() == false)
+        {
+            Debug.LogError($"Player Card UI does not contain the 'Toggle' component.");
         }
         if (listViewContainer == null)
         {
@@ -27,8 +33,9 @@ public class PlayMenu : MonoBehaviour
         {
             Debug.LogError($"The AddPlayerPanel has not been assigned");
         }
+        toggleGroup = listViewContainer.GetComponent<ToggleGroup>();
         joinedPlayers = new List<PlayerData>();
-        joinedPlayersUI = new List<GameObject>();
+        joinedPlayersUI = new List<Toggle>();
     }
 
     public void AddPlayer(string name)
@@ -43,7 +50,27 @@ public class PlayMenu : MonoBehaviour
         GameObject card = Instantiate(playerCardPrefab, listViewContainer.transform);
         card.GetComponentInChildren<TMP_Text>().text = name;
         card.GetComponentInChildren<Image>().color = color;
-        joinedPlayersUI.Add(card);
+        Toggle toggle = card.GetComponent<Toggle>();
+        toggle.group = toggleGroup;
+
+        joinedPlayersUI.Add(toggle);
+    }
+
+    public void RemovePlayer()
+    {
+        int index;
+        for(index = 0; index < joinedPlayersUI.Count; index++)
+        {
+            if(joinedPlayersUI[index].isOn)
+            {
+                Debug.Log($"Removing {joinedPlayers[index].Name} at index {index}");
+                joinedPlayers.RemoveAt(index);
+                Destroy(joinedPlayersUI[index].gameObject);
+                joinedPlayersUI.RemoveAt(index);
+                break;
+            }
+        }
+        
     }
 
     public void RequestStart()

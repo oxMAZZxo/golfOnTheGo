@@ -1,19 +1,21 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class PlayerData
 {
     /// <summary>
     /// The ID of this Player
     /// </summary>
-    public int ID { get; }
+    [property: SerializeField]public int ID { get; }
     /// <summary>
     /// The Name of this player
     /// </summary>
-    public string Name { get; }
+    [property: SerializeField]public string Name { get; }
     /// <summary>
     /// The colour used for this Players sprite
     /// </summary>
-    public Color Colour {get;}
+    [property: SerializeField]public Color Colour {get;}
     /// <summary>
     /// This players Score
     /// </summary>
