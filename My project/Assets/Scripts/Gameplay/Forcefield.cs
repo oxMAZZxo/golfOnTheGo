@@ -5,7 +5,7 @@ public class Forcefield : MonoBehaviour
 {
     [SerializeField,Range(20f,100f)]private float accumilatedForce = 50f;
     [SerializeField]private LayerMask physicsOverlapLayer;
-    [SerializeField]private int overlapRadius;
+    [SerializeField]private float overlapRadius;
     [SerializeField]private Vector2 overlapPositionOffset;
 
     void FixedUpdate()

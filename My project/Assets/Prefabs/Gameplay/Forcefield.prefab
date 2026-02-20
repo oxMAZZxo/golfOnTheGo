@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2826838369667055236}
   - component: {fileID: 2204192074945022353}
   - component: {fileID: 8865947969934224271}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Forcefield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,5 +127,5 @@ MonoBehaviour:
   physicsOverlapLayer:
     serializedVersion: 2
     m_Bits: 8
-  overlapRadius: 1
+  overlapRadius: 1.5
   overlapPositionOffset: {x: 0, y: 0}
