@@ -13,6 +13,15 @@ public class LevelHUD : MonoBehaviour
     void OnEnable()
     {
         GameManager.Instance.UpdatePlayerTurn += OnUpdatePlayerTurn;
+        GameManager.Instance.LevelCompleted += OnLevelCompleted;
+    }
+
+    private void OnLevelCompleted(PlayerData[] obj)
+    {
+        playerTurnLabel.gameObject.SetActive(false);
+        playerScoreLabel.gameObject.SetActive(false);
+        playerTriesLabel.gameObject.SetActive(false);
+        displayImage.gameObject.SetActive(false);
     }
 
     private void OnUpdatePlayerTurn(PlayerData playerData)
@@ -26,6 +35,7 @@ public class LevelHUD : MonoBehaviour
 
     void OnDisable()
     {
+        GameManager.Instance.LevelCompleted -= OnLevelCompleted;
         GameManager.Instance.UpdatePlayerTurn -= OnUpdatePlayerTurn;
     }
 }

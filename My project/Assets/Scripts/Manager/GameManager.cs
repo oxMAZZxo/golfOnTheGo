@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     private PlayerData[] activePlayers;
     private int currentPlayerIndex;
     public event Action<PlayerData> UpdatePlayerTurn;
+    public event Action<PlayerData[]> LevelCompleted;
 
     void Awake()
     {
@@ -34,8 +35,9 @@ public class GameManager : MonoBehaviour
         HandlePlayer(pothole,e);
         if (CheckLevelComplete())
         {
-            ApplicationController.Instance.LoadNextLevel();
-        }else
+            LevelCompleted?.Invoke(activePlayers);
+        }
+        else
         {
             ActivateNextPlayer();
         }
@@ -49,7 +51,7 @@ public class GameManager : MonoBehaviour
         {
             if (player.Controller == controller)
             {
-                player.Score = pothole.Points - (player.Tries - 1);
+                player.Score = pothole.Points - player.Tries;
                 break;
             }
         }

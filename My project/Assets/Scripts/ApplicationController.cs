@@ -34,4 +34,5 @@ public class ApplicationController : MonoBehaviour
         CurrentLevel +=1;
         SceneManager.LoadScene(CurrentLevel);
     }
+
 }
