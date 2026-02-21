@@ -7,7 +7,7 @@ public class Pothole : MonoBehaviour
 {
     [field: SerializeField, Range(1, 10)] public int Points { get; private set; }
     [SerializeField] private TMP_Text pointsLabel;
-    public static event EventHandler<PlayerController> PlayerPotted;
+    public static event Action<Pothole,PlayerController> PlayerPotted;
 
     private void Start()
     {

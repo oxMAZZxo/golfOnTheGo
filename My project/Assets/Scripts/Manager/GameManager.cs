@@ -29,10 +29,9 @@ public class GameManager : MonoBehaviour
         Pothole.PlayerPotted += OnPlayerPotted;
     }
 
-    private void OnPlayerPotted(object sender, PlayerController e)
+    private void OnPlayerPotted(Pothole pothole, PlayerController controller)
     {
-        Pothole pothole = (Pothole)sender;
-        HandlePlayer(pothole,e);
+        HandlePlayer(pothole,controller);
         if (CheckLevelComplete())
         {
             LevelCompleted?.Invoke(activePlayers);
@@ -67,7 +66,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    private void OnPlayerTried(object sender, EventArgs eventArgs)
+    private void OnPlayerTried()
     {
         activePlayers[currentPlayerIndex].Controller.DisableInput();
         activePlayers[currentPlayerIndex].Tries++;
@@ -89,7 +88,7 @@ public class GameManager : MonoBehaviour
         UpdatePlayerTurn?.Invoke(activePlayers[currentPlayerIndex]);
     }
 
-    private void OnPlayersSpawned(object sender, PlayerData[] e)
+    private void OnPlayersSpawned(PlayerData[] e)
     {
         activePlayers = e;
         e[0].Controller.EnableInput();

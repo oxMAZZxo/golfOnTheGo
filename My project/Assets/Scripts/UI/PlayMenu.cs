@@ -13,7 +13,7 @@ public class PlayMenu : MonoBehaviour
     private ToggleGroup toggleGroup;
     private List<PlayerData> joinedPlayers;
     private List<Toggle> joinedPlayersUI;
-    public static event EventHandler<PlayerData[]> RequestGameStart; 
+    public static event Action<PlayerData[]> RequestGameStart; 
 
     void Start()
     {
@@ -76,7 +76,7 @@ public class PlayMenu : MonoBehaviour
     public void RequestStart()
     {
         if(joinedPlayers.Count < 1) {return;}
-        RequestGameStart?.Invoke(this, joinedPlayers.ToArray());
+        RequestGameStart?.Invoke(joinedPlayers.ToArray());
     }
 
     void OnEnable()

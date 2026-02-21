@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class LocalMultiplayerManager : MonoBehaviour
 {
     public static LocalMultiplayerManager Instance {get; private set;} 
-    public static event EventHandler<PlayerData[]> PlayersSpawned;
+    public static event Action<PlayerData[]> PlayersSpawned;
     [SerializeField]private PlayerController playerPrefab;
     private PlayerData[] players;
 
@@ -51,7 +51,7 @@ public class LocalMultiplayerManager : MonoBehaviour
             players[i].Tries = 0;
         }
 
-        PlayersSpawned?.Invoke(this, players);
+        PlayersSpawned?.Invoke(players);
     }
 
     void OnDisable()
@@ -60,7 +60,7 @@ public class LocalMultiplayerManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoad;
     }
 
-    private void OnRequestGameStart(object sender, PlayerData[] joinedPlayers)
+    private void OnRequestGameStart(PlayerData[] joinedPlayers)
     {
         players = joinedPlayers;
         ApplicationController.Instance.LoadLevel(1);

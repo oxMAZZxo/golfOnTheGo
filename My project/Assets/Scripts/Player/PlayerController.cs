@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
 public class PlayerController : MonoBehaviour
 {
-    public static EventHandler PlayerTried;
+    public static Action PlayerTried;
     private Vector2 touchStart;
     private Vector2 touchEnd;
     private Rigidbody2D rb;
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         if (rb.IsSleeping() || (rb.linearVelocity.magnitude < 0.12f && rb.linearVelocity.magnitude != 0f))
         {
             tryAttempt = false;
-            PlayerTried?.Invoke(this, EventArgs.Empty);
+            PlayerTried?.Invoke();
         }
     }
 

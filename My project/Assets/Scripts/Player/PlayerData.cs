@@ -7,15 +7,15 @@ public class PlayerData
     /// <summary>
     /// The ID of this Player
     /// </summary>
-    [property: SerializeField]public int ID { get; }
+    public int ID { get; }
     /// <summary>
     /// The Name of this player
     /// </summary>
-    [property: SerializeField]public string Name { get; }
+    public string Name { get; }
     /// <summary>
     /// The colour used for this Players sprite
     /// </summary>
-    [property: SerializeField]public Color Colour {get;}
+    public Color Colour {get;}
     /// <summary>
     /// This players Score
     /// </summary>
