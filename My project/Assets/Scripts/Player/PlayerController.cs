@@ -28,9 +28,9 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!tryAttempt || rb.linearVelocity.magnitude == 0f) { return; }
+        if (!tryAttempt) { return; }
 
-        if (rb.IsSleeping() || rb.linearVelocity.magnitude < 0.12f)
+        if (rb.IsSleeping() || (rb.linearVelocity.magnitude < 0.12f && rb.linearVelocity.magnitude != 0f))
         {
             tryAttempt = false;
             PlayerTried?.Invoke(this, EventArgs.Empty);
@@ -66,6 +66,11 @@ public class PlayerController : MonoBehaviour
     {
         TouchControls.touchStarted -= OnTouchStarted;
         TouchControls.touchEnded -= OnTouchEnded;
+    }
+
+    void OnDisable()
+    {
+        tryAttempt = false;
     }
 
     void OnDestroy()

@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     private PlayerData[] activePlayers;
     private int currentPlayerIndex;
-    public event Action<string, Color> UpdatePlayerTurn;
+    public event Action<PlayerData> UpdatePlayerTurn;
 
     void Awake()
     {
@@ -31,33 +31,50 @@ public class GameManager : MonoBehaviour
     private void OnPlayerPotted(object sender, PlayerController e)
     {
         Pothole pothole = (Pothole)sender;
-        e.gameObject.SetActive(false);
-        e.DisableInput();
+        HandlePlayer(pothole,e);
+        if (CheckLevelComplete())
+        {
+            ApplicationController.Instance.LoadNextLevel();
+        }else
+        {
+            ActivateNextPlayer();
+        }
+    }
+
+    private void HandlePlayer(Pothole pothole, PlayerController controller)
+    {
+        controller.DisableInput();
+        controller.gameObject.SetActive(false);
         foreach (PlayerData player in activePlayers)
         {
-            if (player.Controller)
+            if (player.Controller == controller)
             {
                 player.Score = pothole.Points - (player.Tries - 1);
                 break;
             }
         }
-        CheckLevelComplete();
     }
 
-    private void CheckLevelComplete()
+    private bool CheckLevelComplete()
     {
         foreach (PlayerData player in activePlayers)
         {
-            if (player.Controller.isActiveAndEnabled) { return; }
+            if (player.Controller.isActiveAndEnabled) { return false; }
         }
         Debug.Log($"Level has been completed!");
-        ApplicationController.Instance.LoadNextLevel();
+        return true;
     }
 
     private void OnPlayerTried(object sender, EventArgs eventArgs)
     {
         activePlayers[currentPlayerIndex].Controller.DisableInput();
         activePlayers[currentPlayerIndex].Tries++;
+        
+        ActivateNextPlayer();
+    }
+
+    private void ActivateNextPlayer()
+    {
         bool valid = false;
         while (!valid)
         {
@@ -67,16 +84,15 @@ public class GameManager : MonoBehaviour
 
         activePlayers[currentPlayerIndex].Controller.EnableInput();
         CameraFollow.Instance.Target = activePlayers[currentPlayerIndex].Controller.transform;
-        UpdatePlayerTurn?.Invoke(activePlayers[currentPlayerIndex].Name,activePlayers[currentPlayerIndex].Colour);
+        UpdatePlayerTurn?.Invoke(activePlayers[currentPlayerIndex]);
     }
-
 
     private void OnPlayersSpawned(object sender, PlayerData[] e)
     {
         activePlayers = e;
         e[0].Controller.EnableInput();
         currentPlayerIndex = 0;
-        UpdatePlayerTurn?.Invoke(e[0].Name,e[0].Colour);
+        UpdatePlayerTurn?.Invoke(e[0]);
         CameraFollow.Instance.Target = e[0].Controller.transform;
     }
 
