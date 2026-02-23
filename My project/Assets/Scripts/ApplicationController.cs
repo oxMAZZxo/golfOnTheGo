@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public class ApplicationController : MonoBehaviour
 {
@@ -11,6 +10,7 @@ public class ApplicationController : MonoBehaviour
         if(Instance == null && Instance != this)
         {
             Instance = this;
+            Application.targetFrameRate = 144;
             DontDestroyOnLoad(gameObject);
         }
         else
