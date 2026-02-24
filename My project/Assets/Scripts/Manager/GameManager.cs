@@ -51,7 +51,8 @@ public class GameManager : MonoBehaviour
         {
             if (player.Controller == controller)
             {
-                player.Score = pothole.Points - player.Tries;
+                Debug.Log($"{player.Name} potted in hole worth {pothole.Points}. Player had {player.Tries} tries, so points awarded: {pothole.Points - player.Tries}. Final {player.Name} score is {player.Score + (pothole.Points - player.Tries)}");
+                player.Score += pothole.Points - player.Tries;
                 break;
             }
         }
