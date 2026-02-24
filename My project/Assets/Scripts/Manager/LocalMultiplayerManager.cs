@@ -46,7 +46,9 @@ public class LocalMultiplayerManager : MonoBehaviour
         for(int i = 0; i < players.Length; i++)
         {
             PlayerController current = Instantiate(playerPrefab,spawnPosition,Quaternion.identity);
-            current.GetComponent<SpriteRenderer>().color = players[i].Colour;
+            SpriteRenderer renderer = current.GetComponent<SpriteRenderer>();
+            renderer.color = players[i].Colour;
+            renderer.sortingOrder = players.Length - i;
             players[i].Controller = current;
             players[i].Tries = 0;
         }
