@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -20,12 +21,13 @@ public class FinalScoreDisplay : MonoBehaviour
     {
         panel.SetActive(true);
         StartCoroutine(PanelAnimation());
+        IOrderedEnumerable<PlayerData> players = obj.OrderByDescending(p => p.Score);
 
-        foreach (PlayerData player in obj)
+        foreach (PlayerData player in players)
         {
             PlayerScoreDisplay display = Instantiate(playerScoreDisplayPrefab, contentContainer.transform);
             display.Label = $"{player.Name} : {player.Score}";
-
+            display.Background.color = player.Colour;
             StartCoroutine(PlayerScoreDisplayAnimation(display, 1f));
         }
     }
