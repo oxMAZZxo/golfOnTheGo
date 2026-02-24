@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -24,5 +25,12 @@ public class AddPlayerPanel : MonoBehaviour
     public void OnEnable()
     {
         inputField.text = string.Empty;
+        StartCoroutine(ActivateInputField());
+    }
+
+    private IEnumerator ActivateInputField()
+    {
+        yield return null;
+        inputField.ActivateInputField();
     }
 }
