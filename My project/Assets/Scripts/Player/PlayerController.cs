@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 touchStart;
     private Vector2 touchEnd;
     private Rigidbody2D rb;
-    [SerializeField] private float maxDragDistance = 300f;
+    [field: SerializeField] public float MaxDragDistance = 300f;
     [SerializeField] private float forceMultiplier;
     private bool tryAttempt;
 
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     private void ShootBall()
     {
         Vector2 dragVector = touchEnd - touchStart;
-        float dragDistance = Mathf.Clamp(dragVector.magnitude, 0f, maxDragDistance);
+        float dragDistance = Mathf.Clamp(dragVector.magnitude, 0f, MaxDragDistance);
         Vector2 normalizedDrag = dragVector.normalized;
 
         Vector2 force = new Vector2(-normalizedDrag.x, -normalizedDrag.y) * dragDistance * forceMultiplier;
@@ -58,14 +58,14 @@ public class PlayerController : MonoBehaviour
 
     public void EnableInput()
     {
-        TouchControls.touchStarted += OnTouchStarted;
-        TouchControls.touchEnded += OnTouchEnded;
+        TouchControls.TouchStarted += OnTouchStarted;
+        TouchControls.TouchEnded += OnTouchEnded;
     }
 
     public void DisableInput()
     {
-        TouchControls.touchStarted -= OnTouchStarted;
-        TouchControls.touchEnded -= OnTouchEnded;
+        TouchControls.TouchStarted -= OnTouchStarted;
+        TouchControls.TouchEnded -= OnTouchEnded;
     }
 
     void OnDisable()

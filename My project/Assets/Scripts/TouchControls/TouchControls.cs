@@ -9,7 +9,7 @@ public class TouchControls : MonoBehaviour
 {
     //For debugging purposes
     [SerializeField]private Camera cam;
-    public static TouchControls Instance;
+    public static TouchControls Instance {get; private set;}
     [SerializeField,Range(1f,1000f)]private float deadzone = 10f;
     [SerializeField,Range(0.01f,1f)]private float minDiagonalThreshold = 0.4f;
     [SerializeField]private InputActionReference touchInput;
@@ -17,22 +17,22 @@ public class TouchControls : MonoBehaviour
     /// The Touch Event will invoke when a touch input has been calculated. 
     /// It will return TouchEventArgs which hold information about how long the touch was, and its direction.
     /// </summary>
-    public static event EventHandler<TouchEventArgs> touchEvent;
+    public static event EventHandler<TouchEventArgs> TouchEvent;
     /// <summary>
     /// The Touch Started event will invoke when any touch input has been detected and send the start touch position as Vector2.
     /// </summary>
-    public static event EventHandler<Vector2> touchStarted;
+    public static event EventHandler<Vector2> TouchStarted;
     /// <summary>
     /// The Touch Ended event will invoke when an existing touch has stopped, it will send a Vector2 respresenting the final position.
     /// </summary>
-    public static event EventHandler<Vector2> touchEnded;
+    public static event EventHandler<Vector2> TouchEnded;
     /// <summary>
     /// This event will invoke as a swipe is happening. Giving the user the new position of the current touch.
     /// </summary>
     // public static event EventHandler<Vector2> swipeInProgress;
     private Vector2 touchStart;
     private Vector2 touchEnd;
-    public Vector2 currentTouchPosition {get; private set;}
+    public Vector2 CurrentTouchPosition {get; private set;}
     private float worldRadius;
     private float touchTime;
 
@@ -59,10 +59,10 @@ public class TouchControls : MonoBehaviour
         if(touchStart != Vector2.zero)
         {
             touchTime += Time.deltaTime;
-            currentTouchPosition = Mouse.current.position.ReadValue(); //For testing purposes
+            CurrentTouchPosition = Mouse.current.position.ReadValue(); //For testing purposes
             if(Touchscreen.current != null)
             {
-                currentTouchPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+                CurrentTouchPosition = Touchscreen.current.primaryTouch.position.ReadValue();
             }
         }
     }
@@ -79,7 +79,7 @@ public class TouchControls : MonoBehaviour
         {
             swipeDirection = CalculateSwipe(swipeDelta);
         }
-        touchEvent?.Invoke(this, new TouchEventArgs(touchTime,touchStart,touchEnd,swipeDirection));
+        TouchEvent?.Invoke(this, new TouchEventArgs(touchTime,touchStart,touchEnd,swipeDirection));
     }
 
     /// <summary>
@@ -133,7 +133,7 @@ public class TouchControls : MonoBehaviour
             touchStart = Touchscreen.current.primaryTouch.position.ReadValue();
         }
 
-        touchStarted?.Invoke(this, touchStart);
+        TouchStarted?.Invoke(this, touchStart);
     }
 
     /// <summary>
@@ -148,16 +148,16 @@ public class TouchControls : MonoBehaviour
         {
             touchEnd = Touchscreen.current.primaryTouch.position.ReadValue();
         }
-        touchEnded?.Invoke(this, touchEnd);
+        TouchEnded?.Invoke(this, touchEnd);
         DetectSwipe();
         touchStart = Vector2.zero;
-        currentTouchPosition = Vector2.zero;
+        CurrentTouchPosition = Vector2.zero;
         touchTime = 0;
     }
 
     public Vector2 GetTouchToWorldPoint()
     {
-        Vector3 pos = new Vector3(currentTouchPosition.x,currentTouchPosition.y, 10f);
+        Vector3 pos = new Vector3(CurrentTouchPosition.x,CurrentTouchPosition.y, 10f);
         return cam.ScreenToWorldPoint(pos);
     }
 

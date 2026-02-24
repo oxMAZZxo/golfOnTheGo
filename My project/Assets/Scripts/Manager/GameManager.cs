@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
         HandlePlayer(pothole,controller);
         if (CheckLevelComplete())
         {
+            TouchVisualiser.Instance.gameObject.SetActive(false);
             LevelCompleted?.Invoke(activePlayers);
         }
         else
@@ -85,11 +86,13 @@ public class GameManager : MonoBehaviour
 
         activePlayers[currentPlayerIndex].Controller.EnableInput();
         CameraFollow.Instance.Target = activePlayers[currentPlayerIndex].Controller.transform;
+        TouchVisualiser.Instance.CurrentPlayer = activePlayers[currentPlayerIndex].Controller;
         UpdatePlayerTurn?.Invoke(activePlayers[currentPlayerIndex]);
     }
 
     private void OnPlayersSpawned(PlayerData[] e)
     {
+        TouchVisualiser.Instance.gameObject.SetActive(true);
         activePlayers = e;
         e[0].Controller.EnableInput();
         currentPlayerIndex = 0;
