@@ -9,14 +9,15 @@ public class PlayerController : MonoBehaviour
     public static Action PlayerTried;
     private Vector2 touchStart;
     private Vector2 touchEnd;
-    private Rigidbody2D rb;
+    public Rigidbody2D Rigidbody {get; private set;}
+    public bool Potted {get; set;}
     [field: SerializeField] public float MaxDragDistance = 300f;
     [SerializeField] private float forceMultiplier;
     private bool tryAttempt;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        Rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void OnTouchEnded(object sender, Vector2 e)
@@ -28,9 +29,9 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!tryAttempt) { return; }
+        if (!tryAttempt || Potted) { return; }
 
-        if (rb.IsSleeping() || (rb.linearVelocity.magnitude < 0.12f && rb.linearVelocity.magnitude != 0f))
+        if (Rigidbody.IsSleeping() || (Rigidbody.linearVelocity.magnitude < 0.12f && Rigidbody.linearVelocity.magnitude != 0f))
         {
             tryAttempt = false;
             PlayerTried?.Invoke();
@@ -45,7 +46,7 @@ public class PlayerController : MonoBehaviour
 
         Vector2 force = new Vector2(-normalizedDrag.x, -normalizedDrag.y) * dragDistance * forceMultiplier;
 
-        rb.AddForce(force, ForceMode2D.Force);
+        Rigidbody.AddForce(force, ForceMode2D.Force);
 
         tryAttempt = true;
     }
