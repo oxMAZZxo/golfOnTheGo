@@ -92,12 +92,13 @@ public class GameManager : MonoBehaviour
 
     private void OnPlayersSpawned(PlayerData[] e)
     {
-        TouchVisualiser.Instance.gameObject.SetActive(true);
         activePlayers = e;
         e[0].Controller.EnableInput();
         currentPlayerIndex = 0;
         UpdatePlayerTurn?.Invoke(e[0]);
         CameraFollow.Instance.Target = e[0].Controller.transform;
+        TouchVisualiser.Instance.gameObject.SetActive(true);
+        TouchVisualiser.Instance.CurrentPlayer = activePlayers[currentPlayerIndex].Controller;
     }
 
 

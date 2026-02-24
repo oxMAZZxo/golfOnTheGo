@@ -23,14 +23,14 @@ public class TouchVisualiser : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        parentRect = GetComponent<RectTransform>();
-        visualRect = visual.rectTransform;
     }
 
     void OnEnable()
     {
         TouchControls.TouchStarted += OnTouchStarted;
         TouchControls.TouchEnded += OnTouchEnded;
+        parentRect = GetComponent<RectTransform>();
+        visualRect = visual.rectTransform;
         visual.gameObject.SetActive(false);
     }
 
