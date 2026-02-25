@@ -37,8 +37,9 @@ public class AlternatingWall : MonoBehaviour
 
         float targetAlpha = isVisible ? 1f : 0f;
         Color currentColor = myRenderer.color;
-        float newAlpha = Mathf.MoveTowards(currentColor.a, targetAlpha, fadeSpeed * Time.deltaTime);
-        SetAlpha(newAlpha);
+        float currentAlpha = Mathf.Lerp(currentColor.a, targetAlpha, fadeSpeed * Time.deltaTime);
+
+        SetAlpha(currentAlpha);
     }
 
     void SetAlpha(float alpha)
