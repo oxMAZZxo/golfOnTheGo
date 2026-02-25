@@ -43,14 +43,16 @@ public class LocalMultiplayerManager : MonoBehaviour
 
     private void SpawnPlayers(Vector3 spawnPosition)
     {
+        Vector2 position = spawnPosition;
         for(int i = 0; i < players.Length; i++)
         {
-            PlayerController current = Instantiate(playerPrefab,spawnPosition,Quaternion.identity);
+            PlayerController current = Instantiate(playerPrefab,position,Quaternion.identity);
             SpriteRenderer renderer = current.GetComponent<SpriteRenderer>();
             renderer.color = players[i].Colour;
             renderer.sortingOrder = players.Length - i;
             players[i].Controller = current;
             players[i].Tries = 0;
+            position.x += 1;
         }
 
         PlayersSpawned?.Invoke(players);

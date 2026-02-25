@@ -22,4 +22,12 @@ public class MainMenuManager : MonoBehaviour
         playMenu.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(true);
     }
+
+    public void PlayButtonClickSFX()
+    {
+        if(AudioManager.Global != null)
+        {
+            AudioManager.Global.Play("ButtonClick");
+        }
+    }
 }

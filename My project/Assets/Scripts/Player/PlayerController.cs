@@ -20,10 +20,22 @@ public class PlayerController : MonoBehaviour
         Rigidbody = GetComponent<Rigidbody2D>();
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(AudioManager.Global != null && (collision.collider.CompareTag("Wall") || collision.collider.CompareTag("Player")))
+        {
+            AudioManager.Global.Play("Ball Impact");
+        }
+    }
+
     private void OnTouchEnded(object sender, Vector2 e)
     {
         if (tryAttempt) { return; }
         touchEnd = e;
+        if(AudioManager.Global != null)
+        {
+            AudioManager.Global.Play("Ball Hit");
+        }
         ShootBall();
     }
 

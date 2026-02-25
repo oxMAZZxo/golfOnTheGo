@@ -30,11 +30,13 @@ public class Pothole : MonoBehaviour
             player.transform.localPosition = new Vector2(0,0);
             current = player;
             animator.SetTrigger("Potted");
+
         }
     }
 
     public void AnimationFinished()
     {
+        AudioManager.Global.Play($"Ball Potted");
         PlayerPotted?.Invoke(this, current);
     }
 }
