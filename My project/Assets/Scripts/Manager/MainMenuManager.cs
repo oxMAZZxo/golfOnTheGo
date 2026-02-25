@@ -23,6 +23,11 @@ public class MainMenuManager : MonoBehaviour
         mainMenu.gameObject.SetActive(true);
     }
 
+    public void QuitApplication()
+    {
+        Application.Quit();
+    }
+
     public void PlayButtonClickSFX()
     {
         if(AudioManager.Global != null)

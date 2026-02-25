@@ -18,7 +18,7 @@ public class AddPlayerPanel : MonoBehaviour
     public void AddPlayer()
     {
         if(string.IsNullOrEmpty(inputField.text) || string.IsNullOrWhiteSpace(inputField.text)) {return;}
-        playMenu.AddPlayer(inputField.text);
+        playMenu.AddPlayer(inputField.text.ToUpper());
         gameObject.SetActive(false);
     }
 
