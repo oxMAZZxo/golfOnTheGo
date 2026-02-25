@@ -681,6 +681,16 @@ MonoBehaviour:
     isMusic: 0
     playOnAwake: 0
     preLoadAudioData: 0
+  - name: Forcefield
+    clip: {fileID: 8300000, guid: 996955ba9f9b40fc7b589dfc06e0dc15, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    source: {fileID: 0}
+    loop: 0
+    isMusic: 0
+    playOnAwake: 0
+    preLoadAudioData: 0
   soundEffectMixer: {fileID: -6394945400016850421, guid: 9ce96616f27b834248b4d4e5cae55da6, type: 2}
   musicMixer: {fileID: 1194650179045277304, guid: 9ce96616f27b834248b4d4e5cae55da6, type: 2}
 --- !u!4 &241700329

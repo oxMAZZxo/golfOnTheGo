@@ -16,6 +16,10 @@ public class Forcefield : MonoBehaviour
         {
             if(collider.TryGetComponent(out Rigidbody2D rb))
             {
+                if(AudioManager.Global != null)
+                {
+                    AudioManager.Global.Play("Forcefield");
+                }
                 rb.AddForce(transform.right * accumilatedForce, ForceMode2D.Force);
             }
         }
