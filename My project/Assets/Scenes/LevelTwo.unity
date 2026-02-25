@@ -2833,6 +2833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerScoreDisplayPrefab: {fileID: 483454735458585934, guid: 32dd5db70d7db00458a35139bb8e2ad2, type: 3}
   panel: {fileID: 2130171315}
+  scrollview: {fileID: 943539839}
   contentContainer: {fileID: 538636081}
   animationDuration: 2
 --- !u!1 &2043118549

@@ -8,6 +8,7 @@ public class FinalScoreDisplay : MonoBehaviour
 {
     [SerializeField] private PlayerScoreDisplay playerScoreDisplayPrefab;
     [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject scrollview;
     [SerializeField] private GameObject contentContainer;
     [SerializeField] private float animationDuration = 2f;
 
@@ -35,18 +36,21 @@ public class FinalScoreDisplay : MonoBehaviour
     {
         float timer = 0;
         Image panelImage = panel.GetComponent<Image>();
-        Color panelTargetColour = panelImage.color;
+        Image scrollviewImage = scrollview.GetComponent<Image>();
+        Color targetColour = panelImage.color;
 
-        Color panelStartColour = panelTargetColour;
-        panelStartColour.a = 0f;
+        Color startColour = targetColour;
+        startColour.a = 0f;
+        
 
-        panelImage.color = panelStartColour;
-
+        panelImage.color = startColour;
+        scrollviewImage.color = startColour;
         while (timer < animationDuration)
         {
             float t = timer / animationDuration;
 
-            panelImage.color = Color.Lerp(panelStartColour,panelTargetColour,t);
+            panelImage.color = Color.Lerp(startColour,targetColour,t);
+            scrollviewImage.color = Color.Lerp(startColour,targetColour,t);
             timer += Time.deltaTime;
             yield return null;
         }
