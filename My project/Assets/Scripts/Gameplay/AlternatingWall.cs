@@ -1,31 +1,50 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer),typeof(BoxCollider2D))]
+[RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
 public class AlternatingWall : MonoBehaviour
 {
-    [SerializeField,Range(1f,10f)]private float alternationInterval = 5f;
+    [SerializeField, Range(1f, 10f)] private float alternationInterval = 5f;
+    [SerializeField] private float fadeSpeed = 2f;
+
     private Collider2D myCollider;
     private SpriteRenderer myRenderer;
+
     private float timer;
+    private bool isVisible = true;
 
     void Start()
     {
         myCollider = GetComponent<Collider2D>();
         myRenderer = GetComponent<SpriteRenderer>();
+
         myCollider.isTrigger = false;
-        myRenderer.enabled = true;
+
+        SetAlpha(1f);
     }
 
     void Update()
     {
-        
-        if(timer >= alternationInterval)
+        timer += Time.deltaTime;
+
+        if (timer >= alternationInterval)
         {
-            myCollider.isTrigger = !myCollider.isTrigger;
-            myRenderer.enabled = !myRenderer.enabled;
             timer = 0f;
+
+            myCollider.isTrigger = !myCollider.isTrigger;
+
+            isVisible = !isVisible;
         }
 
-        timer += Time.deltaTime;
+        float targetAlpha = isVisible ? 1f : 0f;
+        Color currentColor = myRenderer.color;
+        float newAlpha = Mathf.MoveTowards(currentColor.a, targetAlpha, fadeSpeed * Time.deltaTime);
+        SetAlpha(newAlpha);
+    }
+
+    void SetAlpha(float alpha)
+    {
+        Color color = myRenderer.color;
+        color.a = alpha;
+        myRenderer.color = color;
     }
 }
