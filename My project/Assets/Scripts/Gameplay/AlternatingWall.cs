@@ -4,7 +4,7 @@ using UnityEngine;
 public class AlternatingWall : MonoBehaviour
 {
     [SerializeField, Range(1f, 10f)] private float alternationInterval = 5f;
-    [SerializeField] private float fadeSpeed = 2f;
+    private float fadeSpeed = 2f;
 
     private Collider2D myCollider;
     private SpriteRenderer myRenderer;
@@ -16,7 +16,7 @@ public class AlternatingWall : MonoBehaviour
     {
         myCollider = GetComponent<Collider2D>();
         myRenderer = GetComponent<SpriteRenderer>();
-
+        fadeSpeed = alternationInterval * 2;
         myCollider.isTrigger = false;
 
         SetAlpha(1f);
